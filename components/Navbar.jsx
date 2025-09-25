@@ -80,10 +80,12 @@ export default function Navbar() {
       user.email.charAt(0).toUpperCase();
 
     return (
-      <nav className="container mx-auto flex justify-between items-center px-4 py-4 relative z-50">
-        <div className="flex items-center">
+      <nav className="container mx-auto  flex justify-between items-center px-4 py-4 relative z-50">
+        <div className="flex items-center h-10">
           <Link href="/" className="flex items-center gap-2">
-            <Image src={Logo} alt="ScapeSync Logo" width={120} height={40} />
+            <div className="flex items-center mb-8 px-6 pt-12">
+              <Image src={Logo} alt="ScapeSync Logo" />
+            </div>
           </Link>
         </div>
         <div className="flex items-center space-x-4">
@@ -139,9 +141,11 @@ export default function Navbar() {
   // If user is not logged in, show default navbar
   return (
     <nav className="container mx-auto flex justify-between items-center px-4 py-4 relative z-50">
-      <div className="flex items-center">
+      <div className="flex items-center h-10">
         <Link href="/" className="flex items-center gap-2">
-          <Image src={Logo} alt="ScapeSync Logo" width={120} height={40} />
+          <div className="flex items-center mb-8 px-6 pt-12">
+            <Image src={Logo} alt="ScapeSync Logo" />
+          </div>
         </Link>
       </div>
       <div>
