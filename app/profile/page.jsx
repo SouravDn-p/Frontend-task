@@ -3,7 +3,15 @@
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Calendar, User, Mail, Phone, MapPin, Briefcase } from "lucide-react";
+import {
+  Calendar,
+  User,
+  Mail,
+  Phone,
+  MapPin,
+  Briefcase,
+  Lock,
+} from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -104,129 +112,207 @@ export default function ProfilePage() {
                     <User className="w-5 h-5 cursor-pointer" />
                     <span>Profile Information</span>
                   </button>
+                  <button
+                    onClick={() => setActiveTab("settings")}
+                    className={`w-full cursor-pointer text-left px-4 py-3 rounded-lg flex items-center space-x-3 ${
+                      activeTab === "settings"
+                        ? "bg-green-50 text-green-700 border border-green-200"
+                        : "text-gray-700 hover:bg-gray-50"
+                    }`}
+                  >
+                    <Briefcase className="w-5 h-5 cursor-pointer" />
+                    <span>Account Settings</span>
+                  </button>
                 </nav>
               </div>
             </div>
 
             {/* Profile Content */}
             <div className="lg:w-2/3">
-              <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                <div className="border-b border-gray-200 pb-4 mb-6">
-                  <h3 className="text-lg cursor-pointer font-semibold text-gray-900">
-                    Profile Information
-                  </h3>
-                  <p className="text-gray-600 text-sm">
-                    Update your personal details here
-                  </p>
-                </div>
+              {activeTab === "profile" ? (
+                <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                  <div className="border-b border-gray-200 pb-4 mb-6">
+                    <h3 className="text-lg cursor-pointer font-semibold text-gray-900">
+                      Profile Information
+                    </h3>
+                    <p className="text-gray-600 text-sm">
+                      Update your personal details here
+                    </p>
+                  </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        First Name
-                      </label>
-                      <div className="relative">
-                        <input
-                          type="text"
-                          value={user?.first_name || ""}
-                          readOnly
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-900"
-                        />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          First Name
+                        </label>
+                        <div className="relative">
+                          <input
+                            type="text"
+                            value={user?.first_name || ""}
+                            readOnly
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-900"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Last Name
+                        </label>
+                        <div className="relative">
+                          <input
+                            type="text"
+                            value={user?.last_name || ""}
+                            readOnly
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-900"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Email Address
+                        </label>
+                        <div className="relative">
+                          <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                          <input
+                            type="email"
+                            value={user?.email || ""}
+                            readOnly
+                            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-900"
+                          />
+                        </div>
                       </div>
                     </div>
 
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Last Name
-                      </label>
-                      <div className="relative">
-                        <input
-                          type="text"
-                          value={user?.last_name || ""}
-                          readOnly
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-900"
-                        />
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Role
+                        </label>
+                        <div className="relative">
+                          <Briefcase className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                          <input
+                            type="text"
+                            value={user?.role || "Not set"}
+                            readOnly
+                            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 capitalize"
+                          />
+                        </div>
                       </div>
-                    </div>
 
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Email Address
-                      </label>
-                      <div className="relative">
-                        <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                        <input
-                          type="email"
-                          value={user?.email || ""}
-                          readOnly
-                          className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-900"
-                        />
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Member Since
+                        </label>
+                        <div className="relative">
+                          <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                          <input
+                            type="text"
+                            value={
+                              formatDate(user?.created_at) || "Not available"
+                            }
+                            readOnly
+                            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-900"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Last Updated
+                        </label>
+                        <div className="relative">
+                          <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                          <input
+                            type="text"
+                            value={
+                              formatDate(user?.updated_at) || "Not available"
+                            }
+                            readOnly
+                            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-900"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Role
-                      </label>
-                      <div className="relative">
-                        <Briefcase className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                        <input
-                          type="text"
-                          value={user?.role || "Not set"}
-                          readOnly
-                          className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 capitalize"
-                        />
+                  <div className="mt-8 flex justify-end">
+                    <button
+                      disabled
+                      className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50"
+                    >
+                      Save Changes
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                  <div className="border-b border-gray-200 pb-4 mb-6">
+                    <h3 className="text-lg cursor-pointer font-semibold text-gray-900">
+                      Account Settings
+                    </h3>
+                    <p className="text-gray-600 text-sm">
+                      Manage your account security and preferences
+                    </p>
+                  </div>
+
+                  <div className="space-y-6">
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="flex items-center space-x-3 mb-3">
+                        <Lock className="w-5 h-5 text-gray-500" />
+                        <h4 className="font-medium text-gray-900">Password</h4>
                       </div>
+                      <p className="text-sm text-gray-600 mb-4">
+                        Change your password to keep your account secure
+                      </p>
+                      <button
+                        onClick={() => router.push("/forgot-password/reset")}
+                        className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500"
+                      >
+                        Change Password
+                      </button>
                     </div>
 
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Member Since
-                      </label>
-                      <div className="relative">
-                        <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                        <input
-                          type="text"
-                          value={
-                            formatDate(user?.created_at) || "Not available"
-                          }
-                          readOnly
-                          className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-900"
-                        />
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="flex items-center space-x-3 mb-3">
+                        <Mail className="w-5 h-5 text-gray-500" />
+                        <h4 className="font-medium text-gray-900">
+                          Email Preferences
+                        </h4>
                       </div>
+                      <p className="text-sm text-gray-600 mb-4">
+                        Manage your email notification settings
+                      </p>
+                      <button
+                        disabled
+                        className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50"
+                      >
+                        Manage Preferences
+                      </button>
                     </div>
 
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Last Updated
-                      </label>
-                      <div className="relative">
-                        <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                        <input
-                          type="text"
-                          value={
-                            formatDate(user?.updated_at) || "Not available"
-                          }
-                          readOnly
-                          className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-900"
-                        />
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="flex items-center space-x-3 mb-3">
+                        <User className="w-5 h-5 text-gray-500" />
+                        <h4 className="font-medium text-gray-900">
+                          Account Deletion
+                        </h4>
                       </div>
+                      <p className="text-sm text-gray-600 mb-4">
+                        Permanently delete your account and all associated data
+                      </p>
+                      <button
+                        disabled
+                        className="px-4 py-2 bg-red-50 border border-red-200 rounded-lg text-sm font-medium text-red-700 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 disabled:opacity-50"
+                      >
+                        Delete Account
+                      </button>
                     </div>
                   </div>
                 </div>
-
-                <div className="mt-8 flex justify-end">
-                  <button
-                    disabled
-                    className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50"
-                  >
-                    Save Changes
-                  </button>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </div>

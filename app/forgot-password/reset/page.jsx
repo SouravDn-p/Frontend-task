@@ -84,9 +84,9 @@ export default function ResetPasswordPage() {
         localStorage.removeItem("resetPasswordToken");
         localStorage.removeItem("otpVerified");
 
-        // Redirect to login page after successful password reset
+        // Redirect to done page after successful password reset
         setTimeout(() => {
-          router.push("/login");
+          router.push("/forgot-password/done");
         }, 3000);
       } else {
         // Handle error response
@@ -150,7 +150,7 @@ export default function ResetPasswordPage() {
           {/* Success message */}
           {resetSuccess && (
             <div className="mb-6 p-3 bg-green-100 text-green-700 rounded">
-              Your password has been reset successfully. Redirecting to login
+              Your password has been reset successfully. Redirecting to success
               page...
             </div>
           )}
@@ -236,10 +236,13 @@ export default function ResetPasswordPage() {
           {resetSuccess && (
             <p className="text-center text-sm text-gray-600 mt-4">
               If you're not redirected automatically,{" "}
-              <a href="/login" className="text-green-600 hover:underline">
+              <a
+                href="/forgot-password/done"
+                className="text-green-600 hover:underline"
+              >
                 click here
               </a>{" "}
-              to go to the login page.
+              to go to the success page.
             </p>
           )}
         </div>

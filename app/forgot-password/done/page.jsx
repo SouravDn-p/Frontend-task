@@ -4,8 +4,9 @@ import Button from "@/components/ui/Button";
 import Image from "next/image";
 import Logo from "@/public/assets/logo.png";
 import { useRouter } from "next/navigation";
+import FireCrackers from "@/public/assets/fireworks.png";
 
-export default function AccountCreatedPage() {
+export default function PasswordResetSuccessPage() {
   const router = useRouter();
 
   const handleGoToLogin = () => {
@@ -20,17 +21,9 @@ export default function AccountCreatedPage() {
       </div>
       <div className=" flex items-center justify-center p-4">
         <div className="bg-white rounded-lg p-8 w-full max-w-md text-center">
-          {/* Celebration Animation */}
-          <div className="mb-8 relative">
-            <div className="w-64 h-64 mx-auto relative">
-              {/* Fireworks animation placeholder */}
-              <Image
-                src="/assets/fireworks.png"
-                alt="Fireworks"
-                className="absolute inset-0 w-full h-full"
-                fill={true}
-              />
-            </div>
+          {/* Success Icon */}
+          <div className="mb-8 flex justify-center">
+            <Image width={400} height={400} quality={100} className="w-60"  src={FireCrackers} alt="Success Icon" />
           </div>
 
           {/* Success Message */}
@@ -38,7 +31,8 @@ export default function AccountCreatedPage() {
             Password Changed Successfully!
           </h1>
           <p className="text-gray-600 text-sm mb-8">
-            Your account is set up! Just verify your email to get started.
+            Your password has been updated successfully. You can now log in with
+            your new password.
           </p>
 
           <Button

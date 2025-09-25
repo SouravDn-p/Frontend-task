@@ -123,8 +123,8 @@ export default function LoginPage() {
           localStorage.setItem("userRole", responseData.data.role);
         }
 
-        // Redirect to user-role page after successful login
-        router.push("/user-role");
+        // Redirect to home page after successful login
+        router.push("/");
       } else {
         // Handle error response
         const errorData = await response.json().catch(() => ({}));
