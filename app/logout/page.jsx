@@ -1,0 +1,24 @@
+"use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import useAuth from "@/hooks/useAuth";
+
+export default function LogoutPage() {
+  const router = useRouter();
+  const { logout } = useAuth();
+
+  useEffect(() => {
+    // Perform logout
+    logout();
+
+    // Redirect to login page
+    router.push("/login");
+  }, [logout, router]);
+
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
+    </div>
+  );
+}

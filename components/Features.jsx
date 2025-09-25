@@ -30,7 +30,7 @@ const FeaturesSection = () => {
 
   return (
     <section className="container mx-auto sm:px-6 lg:px-8 bg-white py-12">
-      <div className="container  mx-auto">
+      <div className="container mx-12 md:mx-auto ">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-left sm:item-left py-12">
           {features.map((feature, index) => (
             <div key={index} className="sm:text-left">

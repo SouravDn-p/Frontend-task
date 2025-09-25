@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Button from "@/components/ui/Button";
@@ -9,6 +10,8 @@ import Logo from "@/public/assets/logo.png";
 
 export default function ForgotPasswordPage() {
   const router = useRouter();
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const {
     register,
@@ -18,6 +21,7 @@ export default function ForgotPasswordPage() {
   } = useForm();
 
   const onSubmit = async (data) => {
+    setSubmitError("");
     try {
       // Prepare form data for API submission
       const formData = new FormData();
@@ -35,20 +39,31 @@ export default function ForgotPasswordPage() {
       if (response.ok) {
         // Store the email in localStorage for the next step
         localStorage.setItem("forgotPasswordEmail", data.email);
-        // Redirect to OTP verification page
-        router.push("/forgot-password/verify-otp");
+        // Show success message
+        setSubmitSuccess(true);
+        // Redirect to OTP verification page after a short delay
+        setTimeout(() => {
+          router.push("/forgot-password/verify-otp");
+        }, 3000);
       } else {
         // Handle error response
+        const errorData = await response.json().catch(() => ({}));
+        const errorMessage =
+          errorData.message || "Failed to send reset email. Please try again.";
+        setSubmitError(errorMessage);
         setError("email", {
           type: "manual",
-          message: "Failed to send reset email. Please try again.",
+          message: errorMessage,
         });
       }
     } catch (error) {
       console.error("Password reset error:", error);
+      const errorMessage =
+        "An error occurred. Please check your network connection and try again.";
+      setSubmitError(errorMessage);
       setError("email", {
         type: "manual",
-        message: "An error occurred. Please try again.",
+        message: errorMessage,
       });
     }
   };
@@ -81,6 +96,21 @@ export default function ForgotPasswordPage() {
             </p>
           </div>
 
+          {/* Error message */}
+          {submitError && (
+            <div className="mb-6 p-3 bg-red-100 text-red-700 rounded">
+              {submitError}
+            </div>
+          )}
+
+          {/* Success message */}
+          {submitSuccess && (
+            <div className="mb-6 p-3 bg-green-100 text-green-700 rounded">
+              We've sent a password reset code to your email. Redirecting to
+              verification page...
+            </div>
+          )}
+
           {/* Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div>
@@ -108,12 +138,26 @@ export default function ForgotPasswordPage() {
 
             <Button
               type="submit"
-              disabled={isSubmitting}
+              disabled={isSubmitting || submitSuccess}
               className="w-full bg-green-600 hover:bg-green-700 text-white"
             >
               {isSubmitting ? "Sending..." : "Reset Password"}
             </Button>
           </form>
+
+          {/* Additional info */}
+          {submitSuccess && (
+            <div className="text-center text-sm text-gray-600 mt-4">
+              <p className="mb-2">
+                If you don't receive an email within a few minutes:
+              </p>
+              <ul className="list-disc list-inside text-left">
+                <li>Check your spam/junk folder</li>
+                <li>Verify the email address is correct</li>
+                <li>Add noreply@softvencefsd.xyz to your contacts</li>
+              </ul>
+            </div>
+          )}
         </div>
       </div>
     </section>

@@ -18,6 +18,10 @@ export default function ForgotPasswordVerifyOtpPage() {
   } = useForm();
   const [otpValues, setOtpValues] = useState(Array(6).fill(""));
   const [email, setEmail] = useState("");
+  const [resending, setResending] = useState(false);
+  const [resendSuccess, setResendSuccess] = useState(false);
+  const [resendError, setResendError] = useState("");
+  const [verificationError, setVerificationError] = useState("");
   const inputRefs = useRef([]);
 
   useEffect(() => {
@@ -38,6 +42,11 @@ export default function ForgotPasswordVerifyOtpPage() {
 
   // Handle OTP input changes
   const handleOtpChange = (index, value) => {
+    // Clear verification error when user starts typing
+    if (verificationError) {
+      setVerificationError("");
+    }
+
     if (value.length > 1) return; // Only allow single digit
 
     const newOtpValues = [...otpValues];
@@ -57,6 +66,11 @@ export default function ForgotPasswordVerifyOtpPage() {
 
   // Handle paste event
   const handlePaste = (e) => {
+    // Clear verification error when user pastes
+    if (verificationError) {
+      setVerificationError("");
+    }
+
     e.preventDefault();
     const pasteData = e.clipboardData
       .getData("text")
@@ -81,7 +95,59 @@ export default function ForgotPasswordVerifyOtpPage() {
     }
   };
 
+  // Resend OTP function
+  const handleResendOtp = async () => {
+    setResending(true);
+    setResendSuccess(false);
+    setResendError("");
+    try {
+      // Prepare form data for API submission
+      const formData = new FormData();
+      formData.append("email", email);
+
+      // Make API request to resend OTP
+      const response = await fetch(
+        "https://apitest.softvencefsd.xyz/api/forgot-password",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      if (response.ok) {
+        setResendSuccess(true);
+        // Clear any previous OTP values
+        setOtpValues(Array(6).fill(""));
+        // Focus on first input
+        if (inputRefs.current[0]) {
+          inputRefs.current[0].focus();
+        }
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        const errorMessage =
+          errorData.message || "Failed to resend code. Please try again.";
+        setResendError(errorMessage);
+        setError("otp", {
+          type: "manual",
+          message: errorMessage,
+        });
+      }
+    } catch (error) {
+      console.error("Resend OTP error:", error);
+      const errorMessage =
+        "An error occurred while resending code. Please check your network connection and try again.";
+      setResendError(errorMessage);
+      setError("otp", {
+        type: "manual",
+        message: errorMessage,
+      });
+    } finally {
+      setResending(false);
+    }
+  };
+
   const onSubmit = async (data) => {
+    setVerificationError("");
     try {
       // Combine OTP values into a single string
       const otpCode = otpValues.join("");
@@ -144,17 +210,22 @@ export default function ForgotPasswordVerifyOtpPage() {
         // Handle error response
         const errorData = await response.json().catch(() => ({}));
         console.error("OTP verification failed:", errorData);
+        const errorMessage =
+          errorData.message || "Invalid verification code. Please try again.";
+        setVerificationError(errorMessage);
         setError("otp", {
           type: "manual",
-          message:
-            errorData.message || "Invalid verification code. Please try again.",
+          message: errorMessage,
         });
       }
     } catch (error) {
       console.error("OTP verification error:", error);
+      const errorMessage =
+        "An error occurred. Please check your network connection and try again.";
+      setVerificationError(errorMessage);
       setError("otp", {
         type: "manual",
-        message: "An error occurred. Please try again.",
+        message: errorMessage,
       });
     }
   };
@@ -185,6 +256,28 @@ export default function ForgotPasswordVerifyOtpPage() {
               the code in below box to verify your email.
             </p>
           </div>
+
+          {/* Resend success message */}
+          {resendSuccess && (
+            <div className="mb-4 p-3 bg-green-100 text-green-700 rounded text-sm">
+              A new code has been sent to your email. Please check your inbox or
+              spam folder.
+            </div>
+          )}
+
+          {/* Resend error message */}
+          {resendError && (
+            <div className="mb-4 p-3 bg-red-100 text-red-700 rounded text-sm">
+              {resendError}
+            </div>
+          )}
+
+          {/* Verification error message */}
+          {verificationError && (
+            <div className="mb-4 p-3 bg-red-100 text-red-700 rounded text-sm">
+              {verificationError}
+            </div>
+          )}
 
           {/* Verification Code Input */}
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -221,12 +314,20 @@ export default function ForgotPasswordVerifyOtpPage() {
             </Button>
           </form>
 
-          <p className="text-center text-sm text-gray-600 mt-6">
-            Don't have a code?{" "}
-            <a href="#" className="text-green-600 hover:underline">
-              Resend code
-            </a>
-          </p>
+          <div className="text-center text-sm text-gray-600 mt-6">
+            <p className="mb-2">Didn't receive a code?</p>
+            <button
+              onClick={handleResendOtp}
+              disabled={resending}
+              className="text-green-600 hover:underline disabled:opacity-50"
+            >
+              {resending ? "Resending..." : "Resend code"}
+            </button>
+            <p className="mt-2 text-xs">
+              Check your spam folder or add noreply@softvencefsd.xyz to your
+              contacts
+            </p>
+          </div>
         </div>
       </div>
     </section>

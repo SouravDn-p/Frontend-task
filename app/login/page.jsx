@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Button from "@/components/ui/Button";
@@ -8,19 +8,96 @@ import Input from "@/components/ui/Input";
 import Checkbox from "@/components/ui/Checkbox";
 import Image from "next/image";
 import Logo from "@/public/assets/logo.png";
+import useAuth from "@/hooks/useAuth";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [apiError, setApiError] = useState(""); // Added state for API errors
   const router = useRouter();
+  const { login, user, loading } = useAuth();
 
   const {
     register,
     handleSubmit,
+    setError,
+    clearErrors,
     formState: { errors, isSubmitting },
   } = useForm();
 
+  // Redirect to home if user is already logged in
+  useEffect(() => {
+    if (user && !loading) {
+      router.push("/");
+    }
+  }, [user, loading, router]);
+
+  // Show loading state
+  if (loading) {
+    return (
+      <section className="min-h-screen bg-white flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
+      </section>
+    );
+  }
+
+  // If user is already logged in, show a message
+  if (user) {
+    return (
+      <section className="min-h-screen bg-white flex items-center justify-center p-4">
+        <div className="bg-white rounded-lg p-8 w-full max-w-md text-center">
+          <div className="mb-6">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg
+                className="w-8 h-8 text-green-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M5 13l4 4L19 7"
+                ></path>
+              </svg>
+            </div>
+            <h1 className="text-2xl font-semibold text-gray-900 mb-2">
+              You're Already Logged In
+            </h1>
+            <p className="text-gray-600">
+              You are currently logged in as{" "}
+              <span className="font-medium">{user.email}</span>
+            </p>
+          </div>
+          <div className="space-y-4">
+            <Button
+              onClick={() => router.push("/")}
+              className="w-full bg-green-600 hover:bg-green-700 text-white"
+            >
+              Go to Home
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => {
+                // Redirect to the logout endpoint
+                router.push("/logout");
+              }}
+              className="w-full"
+            >
+              Logout
+            </Button>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   const onSubmit = async (data) => {
     try {
+      // Clear any previous API errors
+      setApiError("");
+      clearErrors();
+
       // Prepare form data for API submission
       const formData = new FormData();
       formData.append("email", data.email);
@@ -38,10 +115,8 @@ export default function LoginPage() {
 
       if (response.ok) {
         const responseData = await response.json();
-        // Store the auth token
-        if (responseData.token) {
-          localStorage.setItem("authToken", responseData.token);
-        }
+        // Use the login function from the auth hook
+        await login(responseData.token, responseData.data);
 
         // Store user role if available
         if (responseData.data?.role) {
@@ -54,11 +129,30 @@ export default function LoginPage() {
         // Handle error response
         const errorData = await response.json().catch(() => ({}));
         console.error("Login failed:", errorData);
-        // You might want to show an error message to the user here
+
+        // Set API error message for display
+        if (errorData.errors) {
+          // Handle field-specific errors from backend
+          Object.keys(errorData.errors).forEach((field) => {
+            setError(field, {
+              type: "server",
+              message: errorData.errors[field],
+            });
+          });
+        } else if (errorData.message) {
+          // Handle general error message
+          setApiError(errorData.message);
+        } else {
+          // Fallback error message
+          setApiError(
+            "Login failed. Please check your credentials and try again."
+          );
+        }
       }
     } catch (error) {
       console.error("Login error:", error);
       // Handle network or other errors
+      setApiError("Network error. Please check your connection and try again.");
     }
   };
 
@@ -79,6 +173,13 @@ export default function LoginPage() {
               Please share your login details so you can access the website.
             </p>
           </div>
+
+          {/* API Error Message */}
+          {apiError && (
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-red-700 text-sm">{apiError}</p>
+            </div>
+          )}
 
           {/* Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

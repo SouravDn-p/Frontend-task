@@ -18,6 +18,9 @@ export default function VerifyEmailPage() {
   } = useForm();
   const [otpValues, setOtpValues] = useState(Array(6).fill(""));
   const [email, setEmail] = useState("");
+  const [resending, setResending] = useState(false);
+  const [resendSuccess, setResendSuccess] = useState(false);
+  const [resendError, setResendError] = useState("");
   const inputRefs = useRef([]);
 
   useEffect(() => {
@@ -81,6 +84,56 @@ export default function VerifyEmailPage() {
     }
   };
 
+  // Resend OTP function
+  const handleResendOtp = async () => {
+    setResending(true);
+    setResendSuccess(false);
+    setResendError("");
+
+    try {
+      // Validate email exists
+      if (!email || email === "your email") {
+        setResendError("Registration session expired. Please register again.");
+        return;
+      }
+
+      // Prepare form data for API submission
+      const formData = new FormData();
+      formData.append("email", email);
+
+      // Make API request to resend OTP
+      const response = await fetch(
+        "https://apitest.softvencefsd.xyz/api/resend-otp",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      if (response.ok) {
+        setResendSuccess(true);
+        // Clear any previous OTP values
+        setOtpValues(Array(6).fill(""));
+        // Focus on first input
+        if (inputRefs.current[0]) {
+          inputRefs.current[0].focus();
+        }
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        const errorMessage =
+          errorData.message || "Failed to resend code. Please try again.";
+        setResendError(errorMessage);
+      }
+    } catch (error) {
+      console.error("Resend OTP error:", error);
+      setResendError(
+        "An error occurred while resending code. Please try again."
+      );
+    } finally {
+      setResending(false);
+    }
+  };
+
   const onSubmit = async (data) => {
     try {
       // Combine OTP values into a single string
@@ -96,7 +149,7 @@ export default function VerifyEmailPage() {
       }
 
       // Validate email exists
-      if (!email) {
+      if (!email || email === "your email") {
         setError("otp", {
           type: "manual",
           message: "Registration session expired. Please register again.",
@@ -125,9 +178,12 @@ export default function VerifyEmailPage() {
         router.push("/accountCreated");
       } else {
         // Handle error response
+        const errorData = await response.json().catch(() => ({}));
+        const errorMessage =
+          errorData.message || "Invalid verification code. Please try again.";
         setError("otp", {
           type: "manual",
-          message: "Invalid verification code. Please try again.",
+          message: errorMessage,
         });
       }
     } catch (error) {
@@ -166,6 +222,21 @@ export default function VerifyEmailPage() {
             </p>
           </div>
 
+          {/* Resend success message */}
+          {resendSuccess && (
+            <div className="mb-4 p-3 bg-green-100 text-green-700 rounded text-sm">
+              A new code has been sent to your email. Please check your inbox or
+              spam folder.
+            </div>
+          )}
+
+          {/* Resend error message */}
+          {resendError && (
+            <div className="mb-4 p-3 bg-red-100 text-red-700 rounded text-sm">
+              {resendError}
+            </div>
+          )}
+
           {/* Verification Code Input */}
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex justify-center space-x-3 mb-6">
@@ -201,12 +272,20 @@ export default function VerifyEmailPage() {
             </Button>
           </form>
 
-          <p className="text-center text-sm text-gray-600 mt-6">
-            Don't have a code?{" "}
-            <a href="#" className="text-green-600 hover:underline">
-              Resend code
-            </a>
-          </p>
+          <div className="text-center text-sm text-gray-600 mt-6">
+            <p className="mb-2">Didn't receive a code?</p>
+            <button
+              onClick={handleResendOtp}
+              disabled={resending}
+              className="text-green-600 hover:underline disabled:opacity-50"
+            >
+              {resending ? "Resending..." : "Resend code"}
+            </button>
+            <p className="mt-2 text-xs">
+              Check your spam folder or add noreply@softvencefsd.xyz to your
+              contacts
+            </p>
+          </div>
         </div>
       </div>
     </section>

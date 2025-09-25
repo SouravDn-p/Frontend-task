@@ -12,6 +12,8 @@ export default function ResetPasswordPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [token, setToken] = useState("");
+  const [resetSuccess, setResetSuccess] = useState(false);
+  const [resetError, setResetError] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -41,6 +43,7 @@ export default function ResetPasswordPage() {
   } = useForm();
 
   const onSubmit = async (data) => {
+    setResetError("");
     try {
       // Check if we have a token
       if (!token) {
@@ -73,6 +76,8 @@ export default function ResetPasswordPage() {
       );
 
       if (response.ok) {
+        // Show success message
+        setResetSuccess(true);
         // Clear localStorage items related to forgot password flow
         localStorage.removeItem("forgotPasswordEmail");
         localStorage.removeItem("resetPasswordEmail");
@@ -80,7 +85,9 @@ export default function ResetPasswordPage() {
         localStorage.removeItem("otpVerified");
 
         // Redirect to login page after successful password reset
-        router.push("/login");
+        setTimeout(() => {
+          router.push("/login");
+        }, 3000);
       } else {
         // Handle error response
         const errorData = await response.json().catch(() => ({}));
@@ -88,6 +95,7 @@ export default function ResetPasswordPage() {
         // Show more specific error message
         const errorMessage =
           errorData.message || "Failed to reset password. Please try again.";
+        setResetError(errorMessage);
         setError("password", {
           type: "manual",
           message: errorMessage,
@@ -95,9 +103,12 @@ export default function ResetPasswordPage() {
       }
     } catch (error) {
       console.error("Password reset error:", error);
+      const errorMessage =
+        "An error occurred. Please check your network connection and try again.";
+      setResetError(errorMessage);
       setError("password", {
         type: "manual",
-        message: "An error occurred. Please try again.",
+        message: errorMessage,
       });
     }
   };
@@ -129,6 +140,21 @@ export default function ResetPasswordPage() {
             </p>
           </div>
 
+          {/* Error message */}
+          {resetError && (
+            <div className="mb-6 p-3 bg-red-100 text-red-700 rounded">
+              {resetError}
+            </div>
+          )}
+
+          {/* Success message */}
+          {resetSuccess && (
+            <div className="mb-6 p-3 bg-green-100 text-green-700 rounded">
+              Your password has been reset successfully. Redirecting to login
+              page...
+            </div>
+          )}
+
           {/* Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div>
@@ -147,11 +173,13 @@ export default function ResetPasswordPage() {
                       message: "Password must be at least 8 characters",
                     },
                   })}
+                  disabled={resetSuccess}
                 />
                 <button
                   type="button"
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
                   onClick={() => setShowPassword(!showPassword)}
+                  disabled={resetSuccess}
                 >
                   👁
                 </button>
@@ -177,11 +205,13 @@ export default function ResetPasswordPage() {
                     validate: (value) =>
                       value === watch("password") || "Passwords do not match",
                   })}
+                  disabled={resetSuccess}
                 />
                 <button
                   type="button"
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  disabled={resetSuccess}
                 >
                   👁
                 </button>
@@ -195,12 +225,23 @@ export default function ResetPasswordPage() {
 
             <Button
               type="submit"
-              disabled={isSubmitting}
+              disabled={isSubmitting || resetSuccess}
               className="w-full bg-green-600 hover:bg-green-700 text-white"
             >
               {isSubmitting ? "Resetting..." : "Reset Password"}
             </Button>
           </form>
+
+          {/* Additional info */}
+          {resetSuccess && (
+            <p className="text-center text-sm text-gray-600 mt-4">
+              If you're not redirected automatically,{" "}
+              <a href="/login" className="text-green-600 hover:underline">
+                click here
+              </a>{" "}
+              to go to the login page.
+            </p>
+          )}
         </div>
       </div>
     </section>
