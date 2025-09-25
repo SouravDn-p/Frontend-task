@@ -1,6 +1,7 @@
 import BuildPhone from "@/public/assets/build/buildPhone.png";
 import Image from "next/image";
 import Blend from "@/public/assets/blend.png";
+import Signature from "@/public/assets/build/signature.png";
 
 const BuildSection = () => {
   return (
@@ -8,8 +9,18 @@ const BuildSection = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-5xl font-bold text-gray-900 mb-4 relative">
             Build for Everyone
+            <span>
+              <Image
+                src={Signature}
+                alt="Signature"
+                width={200}
+                height={200}
+                quality={100}
+                className="absolute inset-x-0 -bottom-3 -right-70 mx-auto w-60"
+              />
+            </span>
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Whether you're booking services, managing tasks, or running
