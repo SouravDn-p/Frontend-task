@@ -57,14 +57,14 @@ export default function LoginPage() {
         <Image src={Logo} alt="ScapeSync Logo" />
       </div>
       <div className=" flex items-center justify-center p-4">
-        <div className="bg-white rounded-lg p-8 w-full max-w-md">
+        <div className="bg-white rounded-lg px-8 pt-12 w-full max-w-lg ">
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-2xl font-semibold text-gray-900 mb-2">
               Welcome to ScapeSync
             </h1>
-            <p className="text-gray-600 text-sm">
-              Please enter your login details to access your account
+            <p className="text-gray-600 text-md">
+              Please share your login details so you can access the website.
             </p>
           </div>
 
@@ -77,7 +77,7 @@ export default function LoginPage() {
               <Input
                 type="email"
                 className="w-full"
-                placeholder=""
+                placeholder="email is required"
                 {...register("email", {
                   required: "Email is required",
                   pattern: {
@@ -101,7 +101,7 @@ export default function LoginPage() {
                 <Input
                   type={showPassword ? "text" : "password"}
                   className="w-full pr-10"
-                  placeholder=""
+                  placeholder="password is required"
                   {...register("password", {
                     required: "Password is required",
                     minLength: {
@@ -171,7 +171,7 @@ export default function LoginPage() {
                 d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
               />
             </svg>
-            Continue with Google
+            Log in with Google
           </Button>
 
           {/* Sign up link */}

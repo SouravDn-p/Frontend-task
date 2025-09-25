@@ -72,13 +72,16 @@ export default function Register() {
             <h1 className="text-2xl font-semibold text-gray-900 mb-2">
               Create your Account
             </h1>
-            <p className="text-gray-600 text-sm">
-              Where Sports Meets Smart Tech
+            <p className="text-gray-600 text-md">
+              When sports Meets smart Tech.
             </p>
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="space-y-4 text-black"
+          >
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -108,7 +111,7 @@ export default function Register() {
                 </label>
                 <Input
                   type="text"
-                  placeholder=""
+                  placeholder="Last Name"
                   className="w-full"
                   {...register("lastName", {
                     required: "Last name is required",
@@ -133,7 +136,7 @@ export default function Register() {
               <Input
                 type="email"
                 className="w-full"
-                placeholder=""
+                placeholder="Email Address"
                 {...register("email", {
                   required: "Email is required",
                   pattern: {
@@ -157,7 +160,7 @@ export default function Register() {
                 <Input
                   type={showPassword ? "text" : "password"}
                   className="w-full pr-10"
-                  placeholder=""
+                  placeholder="Password"
                   {...register("password", {
                     required: "Password is required",
                     minLength: {
@@ -189,7 +192,7 @@ export default function Register() {
                 <Input
                   type={showConfirmPassword ? "text" : "password"}
                   className="w-full pr-10"
-                  placeholder=""
+                  placeholder="Confirm Password"
                   {...register("confirmPassword", {
                     required: "Please confirm your password",
                     validate: (value) =>
@@ -268,7 +271,7 @@ export default function Register() {
 
           {/* Login link */}
           <p className="text-center text-sm text-gray-600">
-            Already have an account?{" "}
+            Don&apos;t have an account?{" "}
             <a href="/login" className="text-green-600 hover:underline">
               Sign in
             </a>
