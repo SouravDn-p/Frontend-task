@@ -6,18 +6,31 @@ import Signature from "@/public/assets/signature.png";
 
 export default function HeroSection() {
   return (
-    <div className="container mx-auto flex flex-col md:flex-row items-center justify-between px-4 ">
+    <div className="container w-screen mx-auto flex flex-col md:flex-row items-center justify-between px-4  ">
       <div className="w-full md:w-1/2 text-center md:text-left mb-8 md:mb-0 ">
         <div className="space-y-4 text-gray-900 relative ">
-          <h1 className="text-4xl md:text-5xl lg:text-8xl font-bold text-gray-900 leading-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-gray-900 leading-tight">
             All Your Jobs
             <br />
-            <span>One Smart App</span>
+            <span className="relative inline-block ">
+              One Smart App
+              <Image
+                src={Signature}
+                alt="signature"
+                className="absolute bottom-22 sm:bottom-18 md:bottom-38  xl:top-18 right-30 sm:right-18 lg:right-0 z-10 w-[55%] sm:w-[60%] md:w-[70%] "
+                width={400}
+                height={400}
+                priority={true}
+                quality={100}
+              />
+            </span>
           </h1>
-          <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
+          <p className="text-lg md:text-xl text-gray-600 leading-relaxed relative">
             Built for business owners, employees, and clients streamline job
-            scheduling, service tracking, and team management in one powerful
-            app.
+            scheduling,
+            <span className="relative inline-block ">
+              service tracking, and team management in one powerful app.
+            </span>
           </p>
           <Image
             src={heroIcon}
@@ -25,15 +38,6 @@ export default function HeroSection() {
             className="absolute -top-15 right-75  z-10 w-32"
             width={20}
             height={20}
-            priority={true}
-            quality={100}
-          />
-          <Image
-            src={Signature}
-            alt="signature"
-            className="absolute bottom-22 sm:bottom-20 right-30 sm:right-20  z-10 w-[55%] sm:w-[60%]"
-            width={400}
-            height={400}
             priority={true}
             quality={100}
           />

@@ -31,36 +31,33 @@ const FAQ = () => {
   ];
 
   const toggleFAQ = (index) => {
-    console.log("Current openIndex:", openIndex);
-    console.log("Clicked index:", index);
     const newIndex = openIndex === index ? null : index;
-    console.log("Setting openIndex to:", newIndex);
     setOpenIndex(newIndex);
   };
 
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl mb-4">
+        <div className="text-center mb-12 md:mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             Frequently Asked Questions
           </h2>
-          <p className="text-gray-600">
-            Find answers to common questions about ScapeSync
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+            Quick answers to help you get the most out of our app.
           </p>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-4 md:space-y-6">
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="bg-white rounded-lg border border-gray-200"
+              className="bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300"
             >
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors focus:outline-none"
+                className="w-full px-6 py-5 text-left flex justify-between items-center hover:bg-gray-50 transition-colors focus:outline-none rounded-xl"
               >
-                <span className="font-medium text-gray-900">
+                <span className="font-medium text-gray-900 text-lg">
                   {faq.question}
                 </span>
                 {openIndex === index ? (
@@ -70,7 +67,7 @@ const FAQ = () => {
                 )}
               </button>
               {openIndex === index && (
-                <div className="px-6 pb-4">
+                <div className="px-6 pb-5">
                   <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
                 </div>
               )}

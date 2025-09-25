@@ -2,11 +2,40 @@ import BuildPhone from "@/public/assets/build/buildPhone.png";
 import Image from "next/image";
 import Blend from "@/public/assets/blend.png";
 import Signature from "@/public/assets/build/signature.png";
+import ArrowLeft from "@/public/assets/build/arrowLeft.png";
+import ArrowMid from "@/public/assets/build/arrowMid.png";
+import ArrowRight from "@/public/assets/build/image.png";
 
 const BuildSection = () => {
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white relative">
+      {/* Arrow Elements */}
+      <div className="absolute top-10 left-10 z-10"></div>
+
+      <Image
+        src={ArrowRight}
+        alt="Arrow Right"
+        width={400}
+        height={400}
+        className="absolute inset-x-0 z-100 top-40 -right-350 mx-auto w-80"
+      />
+      <Image
+        src={ArrowLeft}
+        alt="Arrow Left"
+        width={250}
+        height={250}
+        className="absolute inset-x-0 top-40 -left-200 mx-auto w-60"
+      />
+
+      <Image
+        src={ArrowMid}
+        alt="Arrow Middle"
+        width={150}
+        height={150}
+        className="absolute inset-x-0 -bottom-60 -right-30 mx-auto w-60"
+      />
+
+      <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-5xl font-bold text-gray-900 mb-4 relative">
