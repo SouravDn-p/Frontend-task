@@ -11,7 +11,7 @@ import Navbar from "@/components/Navbar";
 
 export default function HomePage() {
   return (
-    <main>
+    <main className="w-screen max-w-screen overflow-x-hidden">
       <Navbar />
       <Hero />
       <Features />

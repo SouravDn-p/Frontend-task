@@ -101,9 +101,10 @@ const BuildSection = () => {
                 <div className="flex items-center space-x-3">
                   <div className="w-5 h-5 bg-green-500 rounded flex items-center justify-center flex-shrink-0">
                     <svg
-                      className="w-3 h-3 text-white"
+                      className="w-1 h-3 text-white"
                       fill="currentColor"
                       viewBox="0 0 20 20"
+                      
                     >
                       <path
                         fillRule="evenodd"

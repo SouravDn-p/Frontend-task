@@ -81,11 +81,9 @@ export default function Navbar() {
 
     return (
       <nav className="container mx-auto flex justify-between items-center px-4 py-4 relative z-50">
-        <div className="flex items-center h-10">
+        <div className="flex items-center">
           <Link href="/" className="flex items-center gap-2">
-            <div className="flex items-center mb-8 px-6 pt-12">
-              <Image src={Logo} alt="ScapeSync Logo" />
-            </div>
+            <Image src={Logo} alt="ScapeSync Logo" width={120} height={40} />
           </Link>
         </div>
         <div className="flex items-center space-x-4">
@@ -141,11 +139,9 @@ export default function Navbar() {
   // If user is not logged in, show default navbar
   return (
     <nav className="container mx-auto flex justify-between items-center px-4 py-4 relative z-50">
-      <div className="flex items-center h-10">
+      <div className="flex items-center">
         <Link href="/" className="flex items-center gap-2">
-          <div className="flex items-center mb-8 px-6 pt-12">
-            <Image src={Logo} alt="ScapeSync Logo" />
-          </div>
+          <Image src={Logo} alt="ScapeSync Logo" width={120} height={40} />
         </Link>
       </div>
       <div>

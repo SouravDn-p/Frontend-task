@@ -4,6 +4,7 @@ import Button from "@/components/ui/Button";
 import Image from "next/image";
 import Logo from "@/public/assets/logo.png";
 import { useRouter } from "next/navigation";
+import FireCrackers from "@/public/assets/fireworks.png";
 
 export default function AccountCreatedPage() {
   const router = useRouter();
@@ -14,20 +15,19 @@ export default function AccountCreatedPage() {
 
   return (
     <section className="min-h-screen bg-white">
-      {}
       <div className="flex items-center mb-8 px-12 pt-4">
-        <Image src={Logo} alt="ScapeSync Logo" />
+        <Image src={Logo} alt="ScapeSync Logo" width={120} height={40} />
       </div>
-      <div className=" flex items-center justify-center p-4">
+      <div className="flex items-center justify-center p-4">
         <div className="bg-white rounded-lg p-8 w-full max-w-md text-center">
           {/* Celebration Animation */}
           <div className="mb-8 relative">
             <div className="w-64 h-64 mx-auto relative">
               {/* Fireworks animation placeholder */}
               <Image
-                src="/assets/fireworks.png"
+                src={FireCrackers}
                 alt="Fireworks"
-                className="absolute inset-0 w-full h-full"
+                className="absolute inset-0 w-full h-full object-contain"
                 fill={true}
               />
             </div>
