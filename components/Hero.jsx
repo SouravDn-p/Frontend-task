@@ -6,10 +6,10 @@ import Signature from "@/public/assets/signature.png";
 
 export default function HeroSection() {
   return (
-    <div className="container w-screen mx-auto flex flex-col md:flex-row items-center justify-between px-4  ">
+    <div className="container w-screen mx-auto flex flex-col md:flex-row items-center justify-between px-4  pt-2 md:pt-0">
       <div className="w-full md:w-1/2 text-center md:text-left mb-8 md:mb-0 ">
         <div className="space-y-4 text-gray-900 relative ">
-          <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-gray-900 leading-tight">
+          <h1 className="text-3xl py-4 md:text-5xl lg:text-7xl font-bold text-gray-900 leading-tight">
             All Your Jobs
             <br />
             <span className="relative inline-block ">
@@ -17,7 +17,7 @@ export default function HeroSection() {
               <Image
                 src={Signature}
                 alt="signature"
-                className="absolute bottom-22 sm:bottom-18 md:bottom-38  xl:top-18 right-30 sm:right-18 lg:right-0 z-10 w-[55%] sm:w-[60%] md:w-[70%] "
+                className="absolute bottom-0 sm:bottom-18 md:bottom-38  xl:top-18 right-5 sm:right-18 lg:right-0 z-10 w-[60%] sm:w-[60%] md:w-[70%] "
                 width={400}
                 height={400}
                 priority={true}
@@ -25,7 +25,7 @@ export default function HeroSection() {
               />
             </span>
           </h1>
-          <p className="text-lg md:text-xl text-gray-600 leading-relaxed relative">
+          <p className="text-sm md:text-xl text-center md:text-left text-gray-600 leading-relaxed relative">
             Built for business owners, employees, and clients streamline job
             scheduling,
             <span className="relative inline-block ">
@@ -35,9 +35,9 @@ export default function HeroSection() {
           <Image
             src={heroIcon}
             alt="LeftTopBlend"
-            className="absolute -top-15 right-75  z-10 w-32"
-            width={20}
-            height={20}
+            className="absolute -top-4 right-30 w-12 md:-top-15 md:right-75  z-10  md:w-32"
+            width={60}
+            height={60}
             priority={true}
             quality={100}
           />

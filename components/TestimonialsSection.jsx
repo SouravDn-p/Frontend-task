@@ -28,12 +28,12 @@ const TestimonialsSection = () => {
 
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-extrabold text-gray-900 sm:text-5xl mb-4">
+          <h2 className="text-2xl md:text-5xl font-bold text-gray-900 mb-4">
             What Our Users Are Saying
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <p className="text-gray-600 max-w-2xl text-sm md:text-lg mx-auto">
             See what business owners and field workers have to say about
             ScapeSync
           </p>
@@ -59,7 +59,9 @@ const TestimonialsSection = () => {
                 </div>
               </div>
               <p className="text-gray-700 leading-relaxed relative ">
-                <span className=" relative z-10 text-black"> {testimonial.quote}</span>
+                <span className=" relative z-10 text-black">
+                  {testimonial.quote}
+                </span>
                 <Image
                   src={Quotation}
                   alt="quote"

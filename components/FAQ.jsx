@@ -37,12 +37,12 @@ const FAQ = () => {
 
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-2xl md:text-5xl font-bold text-gray-900 mb-4">
             Frequently Asked Questions
           </h2>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-600 text-sm md:text-lg max-w-2xl mx-8 md:mx-auto">
             Quick answers to help you get the most out of our app.
           </p>
         </div>
@@ -57,7 +57,7 @@ const FAQ = () => {
                 onClick={() => toggleFAQ(index)}
                 className="w-full px-6 py-5 text-left flex justify-between items-center hover:bg-gray-50 transition-colors focus:outline-none rounded-xl"
               >
-                <span className="font-medium text-gray-900 text-lg">
+                <span className="font-medium text-gray-900 text-sm md:text-lg">
                   {faq.question}
                 </span>
                 {openIndex === index ? (
@@ -68,7 +68,9 @@ const FAQ = () => {
               </button>
               {openIndex === index && (
                 <div className="px-6 pb-5">
-                  <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+                  <p className="text-gray-600 leading-relaxed text-sm md:text-lg">
+                    {faq.answer}
+                  </p>
                 </div>
               )}
             </div>
