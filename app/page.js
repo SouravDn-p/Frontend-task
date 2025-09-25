@@ -5,6 +5,7 @@ import Testimonials from "../components/Testimonials";
 import FAQ from "../components/FAQ";
 import Footer from "../components/Footer";
 import BuildSection from "@/components/BuildSection";
+import TaskSection from "@/components/TaskSection";
 
 export default function HomePage() {
   return (
@@ -13,6 +14,7 @@ export default function HomePage() {
       <Hero />
       <Features />
       <BuildSection />
+      <TaskSection />
       <Testimonials />
       <FAQ />
       <Footer />
