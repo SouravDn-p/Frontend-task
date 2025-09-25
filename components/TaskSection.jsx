@@ -1,4 +1,4 @@
-import BuildPhone from "@/public/assets/build/buildPhone.png";
+import BuildPhone from "@/public/assets/Tasks/image.png";
 import Image from "next/image";
 import Blend from "@/public/assets/blend.png";
 

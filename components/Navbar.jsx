@@ -12,7 +12,7 @@ export default function Navbar() {
           height={140}
         />
       </div>
-      <Button className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg">
+      <Button className="bg-green-600 hover:bg-green-700 text-white px-6 py-2.5 rounded-lg cursor-pointer">
         Get Started
       </Button>
     </nav>
