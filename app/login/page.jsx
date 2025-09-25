@@ -37,11 +37,23 @@ export default function LoginPage() {
       );
 
       if (response.ok) {
-        // Redirect to home page after successful login
-        router.push("/");
+        const responseData = await response.json();
+        // Store the auth token
+        if (responseData.token) {
+          localStorage.setItem("authToken", responseData.token);
+        }
+
+        // Store user role if available
+        if (responseData.data?.role) {
+          localStorage.setItem("userRole", responseData.data.role);
+        }
+
+        // Redirect to user-role page after successful login
+        router.push("/user-role");
       } else {
         // Handle error response
-        console.error("Login failed");
+        const errorData = await response.json().catch(() => ({}));
+        console.error("Login failed:", errorData);
         // You might want to show an error message to the user here
       }
     } catch (error) {
@@ -132,7 +144,10 @@ export default function LoginPage() {
                   Remember me
                 </label>
               </div>
-              <a href="#" className="text-sm text-green-600 hover:underline">
+              <a
+                href="/forgot-password"
+                className="text-sm text-green-600 hover:underline"
+              >
                 Forgot password?
               </a>
             </div>
@@ -164,7 +179,7 @@ export default function LoginPage() {
               />
               <path
                 fill="#FBBC05"
-                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-3.15.81-.62z"
               />
               <path
                 fill="#EA4335"
