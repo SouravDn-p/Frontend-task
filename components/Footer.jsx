@@ -89,11 +89,11 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <p className="text-gray-200/40 text-md max-w-screen p-1 mx-auto border-t border-gray-200/40">
+      <div className="text-gray-200/40 text-md max-w-screen p-1 mx-auto border-t border-gray-200/40">
         <h1 className="max-w-7xl mx-auto">
           © 2021-2025, ScapeSync. All Rights Reserved.
         </h1>
-      </p>
+      </div>
       <Image
         src={TopRightLeaf}
         alt="top right leaf"
