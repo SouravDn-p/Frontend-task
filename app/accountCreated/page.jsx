@@ -14,7 +14,7 @@ export default function AccountCreatedPage() {
 
   return (
     <section className="min-h-screen bg-white">
-      {/* Logo */}
+      {}
       <div className="flex items-center mb-8 px-12 pt-4">
         <Image src={Logo} alt="ScapeSync Logo" />
       </div>

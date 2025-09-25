@@ -9,10 +9,8 @@ export default function LogoutPage() {
   const { logout } = useAuth();
 
   useEffect(() => {
-    // Perform logout
     logout();
 
-    // Redirect to login page
     router.push("/login");
   }, [logout, router]);
 

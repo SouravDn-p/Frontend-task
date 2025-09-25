@@ -25,13 +25,13 @@ export default function UserRolePage() {
 
   return (
     <section className="min-h-screen bg-white">
-      {/* Logo */}
+      {}
       <div className="flex items-center mb-8 px-12 pt-4">
         <Image src={Logo} alt="ScapeSync Logo" />
       </div>
       <div className="flex items-center justify-center">
         <div className="bg-white rounded-lg p-8 w-full max-w-lg">
-          {/* Header */}
+          {}
           <div className="text-center mb-8">
             <h1 className="text-2xl font-semibold text-gray-900 mb-2">
               Who Are You?
@@ -42,7 +42,7 @@ export default function UserRolePage() {
             </p>
           </div>
 
-          {/* Role Selection Cards */}
+          {}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             {/* Client Card */}
             <div
@@ -54,7 +54,7 @@ export default function UserRolePage() {
               onClick={() => handleRoleSelect("client")}
             >
               <div className="text-center">
-                {/* Client Illustration */}
+                {}
                 <div className="mb-4 flex justify-center">
                   <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center">
                     <svg
@@ -85,7 +85,7 @@ export default function UserRolePage() {
               onClick={() => handleRoleSelect("business_owner")}
             >
               <div className="text-center">
-                {/* Business Owner Illustration */}
+                {}
                 <div className="mb-4 flex justify-center">
                   <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center">
                     <svg
@@ -111,7 +111,7 @@ export default function UserRolePage() {
             </div>
           </div>
 
-          {/* Submit Button */}
+          {}
           <div className="text-center">
             <button
               onClick={handleSubmit}

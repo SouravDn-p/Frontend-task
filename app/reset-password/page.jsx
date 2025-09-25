@@ -19,11 +19,9 @@ export default function ResetPasswordPage() {
 
   const onSubmit = async (data) => {
     try {
-      // Prepare form data for API submission
       const formData = new FormData();
       formData.append("email", data.email);
 
-      // Make API request
       const response = await fetch(
         "https://apitest.softvencefsd.xyz/api/forgot-password",
         {
@@ -33,12 +31,10 @@ export default function ResetPasswordPage() {
       );
 
       if (response.ok) {
-        // You might want to show a success message to the user
         console.log("Password reset email sent successfully");
-        // Optionally redirect to a confirmation page
+
         // router.push("/password-reset-confirmation");
       } else {
-        // Handle error response
         setError("email", {
           type: "manual",
           message: "Failed to send reset email. Please try again.",
@@ -55,14 +51,14 @@ export default function ResetPasswordPage() {
 
   return (
     <section className="min-h-screen bg-white">
-      {/* Logo */}
+      {}
       <div className="flex items-center mb-8 px-12 pt-4">
         <Image src={Logo} alt="ScapeSync Logo" />
       </div>
 
       <div className="flex items-center justify-center p-4">
         <div className="bg-white rounded-lg p-8 w-full max-w-md">
-          {/* Back button */}
+          {}
           <button
             className="flex items-center text-gray-600 mb-8 text-sm"
             onClick={() => router.back()}
@@ -70,7 +66,7 @@ export default function ResetPasswordPage() {
             ← Back
           </button>
 
-          {/* Header */}
+          {}
           <div className="text-left mb-8">
             <h1 className="text-2xl font-semibold text-gray-900 mb-2">
               Forgot your password?
@@ -81,7 +77,7 @@ export default function ResetPasswordPage() {
             </p>
           </div>
 
-          {/* Form */}
+          {}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">

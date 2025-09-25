@@ -12,7 +12,7 @@ import useAuth from "@/hooks/useAuth";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const [apiError, setApiError] = useState(""); // Added state for API errors
+  const [apiError, setApiError] = useState("");
   const router = useRouter();
   const { login, user, loading } = useAuth();
 
@@ -24,14 +24,12 @@ export default function LoginPage() {
     formState: { errors, isSubmitting },
   } = useForm();
 
-  // Redirect to home if user is already logged in
   useEffect(() => {
     if (user && !loading) {
       router.push("/");
     }
   }, [user, loading, router]);
 
-  // Show loading state
   if (loading) {
     return (
       <section className="min-h-screen bg-white flex items-center justify-center">
@@ -40,7 +38,6 @@ export default function LoginPage() {
     );
   }
 
-  // If user is already logged in, show a message
   if (user) {
     return (
       <section className="min-h-screen bg-white flex items-center justify-center p-4">
@@ -79,7 +76,6 @@ export default function LoginPage() {
             <Button
               variant="outline"
               onClick={() => {
-                // Redirect to the logout endpoint
                 router.push("/logout");
               }}
               className="w-full"
@@ -94,17 +90,14 @@ export default function LoginPage() {
 
   const onSubmit = async (data) => {
     try {
-      // Clear any previous API errors
       setApiError("");
       clearErrors();
 
-      // Prepare form data for API submission
       const formData = new FormData();
       formData.append("email", data.email);
       formData.append("password", data.password);
       formData.append("remember_me", data.rememberMe ? "true" : "false");
 
-      // Make API request
       const response = await fetch(
         "https://apitest.softvencefsd.xyz/api/login",
         {
@@ -115,24 +108,19 @@ export default function LoginPage() {
 
       if (response.ok) {
         const responseData = await response.json();
-        // Use the login function from the auth hook
+
         await login(responseData.token, responseData.data);
 
-        // Store user role if available
         if (responseData.data?.role) {
           localStorage.setItem("userRole", responseData.data.role);
         }
 
-        // Redirect to home page after successful login
         router.push("/");
       } else {
-        // Handle error response
         const errorData = await response.json().catch(() => ({}));
         console.error("Login failed:", errorData);
 
-        // Set API error message for display
         if (errorData.errors) {
-          // Handle field-specific errors from backend
           Object.keys(errorData.errors).forEach((field) => {
             setError(field, {
               type: "server",
@@ -140,10 +128,8 @@ export default function LoginPage() {
             });
           });
         } else if (errorData.message) {
-          // Handle general error message
           setApiError(errorData.message);
         } else {
-          // Fallback error message
           setApiError(
             "Login failed. Please check your credentials and try again."
           );
@@ -151,14 +137,14 @@ export default function LoginPage() {
       }
     } catch (error) {
       console.error("Login error:", error);
-      // Handle network or other errors
+
       setApiError("Network error. Please check your connection and try again.");
     }
   };
 
   return (
     <section className="min-h-screen bg-white">
-      {/* Logo */}
+      {}
       <div className="flex items-center mb-8 px-12 pt-4">
         <Image src={Logo} alt="ScapeSync Logo" />
       </div>
@@ -174,14 +160,14 @@ export default function LoginPage() {
             </p>
           </div>
 
-          {/* API Error Message */}
+          {}
           {apiError && (
             <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
               <p className="text-red-700 text-sm">{apiError}</p>
             </div>
           )}
 
-          {/* Form */}
+          {}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -262,12 +248,12 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          {/* Divider */}
+          {}
           <div className="my-6 text-center">
             <span className="text-gray-400 text-sm">OR</span>
           </div>
 
-          {/* Google Login */}
+          {}
           <Button variant="outline" className="w-full mb-6 bg-transparent">
             <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24">
               <path
@@ -290,7 +276,7 @@ export default function LoginPage() {
             Log in with Google
           </Button>
 
-          {/* Sign up link */}
+          {}
           <p className="text-center text-sm text-gray-600">
             Don't have an account?{" "}
             <a href="/register" className="text-green-600 hover:underline">

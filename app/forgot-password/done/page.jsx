@@ -15,7 +15,7 @@ export default function PasswordResetSuccessPage() {
 
   return (
     <section className="min-h-screen bg-white">
-      {/* Logo */}
+      {}
       <div className="flex items-center mb-8 px-12 pt-4">
         <Image src={Logo} alt="ScapeSync Logo" />
       </div>
@@ -23,7 +23,14 @@ export default function PasswordResetSuccessPage() {
         <div className="bg-white rounded-lg p-8 w-full max-w-md text-center">
           {/* Success Icon */}
           <div className="mb-8 flex justify-center">
-            <Image width={400} height={400} quality={100} className="w-60"  src={FireCrackers} alt="Success Icon" />
+            <Image
+              width={400}
+              height={400}
+              quality={100}
+              className="w-60"
+              src={FireCrackers}
+              alt="Success Icon"
+            />
           </div>
 
           {/* Success Message */}

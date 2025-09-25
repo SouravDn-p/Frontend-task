@@ -17,20 +17,15 @@ export default function ResetPasswordPage() {
   const router = useRouter();
 
   useEffect(() => {
-    // Get the token from localStorage which was set in the OTP verification step
     const storedToken = localStorage.getItem("resetPasswordToken");
     if (storedToken) {
       setToken(storedToken);
     } else {
-      // Check if we have the email and OTP verification flag
       const email = localStorage.getItem("resetPasswordEmail");
       const otpVerified = localStorage.getItem("otpVerified");
       if (!email || !otpVerified) {
-        // If no email or OTP not verified, redirect back to forgot password page
         router.push("/forgot-password");
       }
-      // If we have email and OTP verified but no token, the useEffect hook in the
-      // onSubmit function will handle this case
     }
   }, [router]);
 
@@ -45,7 +40,6 @@ export default function ResetPasswordPage() {
   const onSubmit = async (data) => {
     setResetError("");
     try {
-      // Check if we have a token
       if (!token) {
         const storedToken = localStorage.getItem("resetPasswordToken");
         if (storedToken) {
@@ -76,23 +70,20 @@ export default function ResetPasswordPage() {
       );
 
       if (response.ok) {
-        // Show success message
         setResetSuccess(true);
-        // Clear localStorage items related to forgot password flow
+
         localStorage.removeItem("forgotPasswordEmail");
         localStorage.removeItem("resetPasswordEmail");
         localStorage.removeItem("resetPasswordToken");
         localStorage.removeItem("otpVerified");
 
-        // Redirect to done page after successful password reset
         setTimeout(() => {
           router.push("/forgot-password/done");
         }, 3000);
       } else {
-        // Handle error response
         const errorData = await response.json().catch(() => ({}));
         console.error("Password reset failed:", errorData);
-        // Show more specific error message
+
         const errorMessage =
           errorData.message || "Failed to reset password. Please try again.";
         setResetError(errorMessage);
@@ -115,14 +106,14 @@ export default function ResetPasswordPage() {
 
   return (
     <section className="min-h-screen bg-white">
-      {/* Logo */}
+      {}
       <div className="flex items-center mb-8 px-12 pt-4">
         <Image src={Logo} alt="ScapeSync Logo" />
       </div>
 
       <div className="flex items-center justify-center p-4">
         <div className="bg-white rounded-lg p-8 w-full max-w-md">
-          {/* Back button */}
+          {}
           <button
             className="flex items-center text-gray-600 mb-8 text-sm"
             onClick={() => router.back()}
@@ -130,7 +121,7 @@ export default function ResetPasswordPage() {
             ← Back
           </button>
 
-          {/* Header */}
+          {}
           <div className="text-left mb-8">
             <h1 className="text-2xl font-semibold text-gray-900 mb-2">
               Reset your password
@@ -140,14 +131,14 @@ export default function ResetPasswordPage() {
             </p>
           </div>
 
-          {/* Error message */}
+          {}
           {resetError && (
             <div className="mb-6 p-3 bg-red-100 text-red-700 rounded">
               {resetError}
             </div>
           )}
 
-          {/* Success message */}
+          {}
           {resetSuccess && (
             <div className="mb-6 p-3 bg-green-100 text-green-700 rounded">
               Your password has been reset successfully. Redirecting to success
@@ -155,7 +146,7 @@ export default function ResetPasswordPage() {
             </div>
           )}
 
-          {/* Form */}
+          {}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -232,7 +223,7 @@ export default function ResetPasswordPage() {
             </Button>
           </form>
 
-          {/* Additional info */}
+          {}
           {resetSuccess && (
             <p className="text-center text-sm text-gray-600 mt-4">
               If you're not redirected automatically,{" "}

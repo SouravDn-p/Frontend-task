@@ -23,11 +23,9 @@ export default function ForgotPasswordPage() {
   const onSubmit = async (data) => {
     setSubmitError("");
     try {
-      // Prepare form data for API submission
       const formData = new FormData();
       formData.append("email", data.email);
 
-      // Make API request
       const response = await fetch(
         "https://apitest.softvencefsd.xyz/api/forgot-password",
         {
@@ -37,16 +35,14 @@ export default function ForgotPasswordPage() {
       );
 
       if (response.ok) {
-        // Store the email in localStorage for the next step
         localStorage.setItem("forgotPasswordEmail", data.email);
-        // Show success message
+
         setSubmitSuccess(true);
-        // Redirect to OTP verification page after a short delay
+
         setTimeout(() => {
           router.push("/forgot-password/verify-otp");
         }, 3000);
       } else {
-        // Handle error response
         const errorData = await response.json().catch(() => ({}));
         const errorMessage =
           errorData.message || "Failed to send reset email. Please try again.";
@@ -70,14 +66,12 @@ export default function ForgotPasswordPage() {
 
   return (
     <section className="min-h-screen bg-white">
-      {/* Logo */}
       <div className="flex items-center mb-8 px-12 pt-4">
         <Image src={Logo} alt="ScapeSync Logo" />
       </div>
 
       <div className="flex items-center justify-center p-4">
         <div className="bg-white rounded-lg p-8 w-full max-w-md">
-          {/* Back button */}
           <button
             className="flex items-center text-gray-600 mb-8 text-sm"
             onClick={() => router.back()}
@@ -85,7 +79,6 @@ export default function ForgotPasswordPage() {
             ← Back
           </button>
 
-          {/* Header */}
           <div className="text-left mb-8">
             <h1 className="text-2xl font-semibold text-gray-900 mb-2">
               Forgot your password?
@@ -96,14 +89,12 @@ export default function ForgotPasswordPage() {
             </p>
           </div>
 
-          {/* Error message */}
           {submitError && (
             <div className="mb-6 p-3 bg-red-100 text-red-700 rounded">
               {submitError}
             </div>
           )}
 
-          {/* Success message */}
           {submitSuccess && (
             <div className="mb-6 p-3 bg-green-100 text-green-700 rounded">
               We've sent a password reset code to your email. Redirecting to
@@ -111,7 +102,6 @@ export default function ForgotPasswordPage() {
             </div>
           )}
 
-          {/* Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -145,7 +135,6 @@ export default function ForgotPasswordPage() {
             </Button>
           </form>
 
-          {/* Additional info */}
           {submitSuccess && (
             <div className="text-center text-sm text-gray-600 mt-4">
               <p className="mb-2">

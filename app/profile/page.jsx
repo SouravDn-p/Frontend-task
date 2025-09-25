@@ -21,13 +21,11 @@ export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState("profile");
 
   useEffect(() => {
-    // If user is not logged in, redirect to login page
     if (!loading && !user) {
       router.push("/login");
     }
   }, [user, loading, router]);
 
-  // Format date for display
   const formatDate = (dateString) => {
     if (!dateString) return "Not available";
     const date = new Date(dateString);

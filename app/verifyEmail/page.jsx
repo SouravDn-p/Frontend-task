@@ -24,41 +24,34 @@ export default function VerifyEmailPage() {
   const inputRefs = useRef([]);
 
   useEffect(() => {
-    // Get email from localStorage
     const registrationEmail = localStorage.getItem("registrationEmail");
     if (registrationEmail) {
       setEmail(registrationEmail);
     } else {
-      // Fallback to a default email if not found
       setEmail("your email");
     }
 
-    // Focus on first input when page loads
     if (inputRefs.current[0]) {
       inputRefs.current[0].focus();
     }
   }, []);
 
-  // Handle OTP input changes
   const handleOtpChange = (index, value) => {
-    if (value.length > 1) return; // Only allow single digit
+    if (value.length > 1) return;
 
     const newOtpValues = [...otpValues];
     newOtpValues[index] = value;
     setOtpValues(newOtpValues);
 
-    // Move to next input if value is entered
     if (value && index < 5 && inputRefs.current[index + 1]) {
       inputRefs.current[index + 1].focus();
     }
 
-    // Move to previous input if value is deleted
     if (!value && index > 0 && inputRefs.current[index - 1]) {
       inputRefs.current[index - 1].focus();
     }
   };
 
-  // Handle paste event
   const handlePaste = (e) => {
     e.preventDefault();
     const pasteData = e.clipboardData
@@ -70,38 +63,32 @@ export default function VerifyEmailPage() {
       const newOtpValues = pasteData.split("");
       setOtpValues(newOtpValues);
 
-      // Focus on last input
       if (inputRefs.current[5]) {
         inputRefs.current[5].focus();
       }
     }
   };
 
-  // Handle keydown for backspace
   const handleKeyDown = (index, e) => {
     if (e.key === "Backspace" && !otpValues[index] && index > 0) {
       inputRefs.current[index - 1].focus();
     }
   };
 
-  // Resend OTP function
   const handleResendOtp = async () => {
     setResending(true);
     setResendSuccess(false);
     setResendError("");
 
     try {
-      // Validate email exists
       if (!email || email === "your email") {
         setResendError("Registration session expired. Please register again.");
         return;
       }
 
-      // Prepare form data for API submission
       const formData = new FormData();
       formData.append("email", email);
 
-      // Make API request to resend OTP
       const response = await fetch(
         "https://apitest.softvencefsd.xyz/api/resend-otp",
         {
@@ -112,9 +99,7 @@ export default function VerifyEmailPage() {
 
       if (response.ok) {
         setResendSuccess(true);
-        // Clear any previous OTP values
         setOtpValues(Array(6).fill(""));
-        // Focus on first input
         if (inputRefs.current[0]) {
           inputRefs.current[0].focus();
         }
@@ -136,10 +121,8 @@ export default function VerifyEmailPage() {
 
   const onSubmit = async (data) => {
     try {
-      // Combine OTP values into a single string
       const otpCode = otpValues.join("");
 
-      // Validate OTP is complete
       if (otpCode.length !== 6) {
         setError("otp", {
           type: "manual",
@@ -148,7 +131,6 @@ export default function VerifyEmailPage() {
         return;
       }
 
-      // Validate email exists
       if (!email || email === "your email") {
         setError("otp", {
           type: "manual",
@@ -157,12 +139,10 @@ export default function VerifyEmailPage() {
         return;
       }
 
-      // Prepare form data for API submission
       const formData = new FormData();
       formData.append("email", email);
       formData.append("otp", otpCode);
 
-      // Make API request
       const response = await fetch(
         "https://apitest.softvencefsd.xyz/api/verify_otp",
         {
@@ -172,12 +152,9 @@ export default function VerifyEmailPage() {
       );
 
       if (response.ok) {
-        // Clear the registration email from localStorage
         localStorage.removeItem("registrationEmail");
-        // Redirect to account created page after successful verification
         router.push("/accountCreated");
       } else {
-        // Handle error response
         const errorData = await response.json().catch(() => ({}));
         const errorMessage =
           errorData.message || "Invalid verification code. Please try again.";
@@ -197,13 +174,11 @@ export default function VerifyEmailPage() {
 
   return (
     <section className="min-h-screen bg-white">
-      {/* Logo */}
       <div className="flex items-center mb-8 px-12 pt-4 ">
         <Image src={Logo} alt="ScapeSync Logo" />
       </div>
       <div className=" flex items-center justify-center px-4  py-12">
         <div className="bg-white rounded-lg p-8 w-full max-w-md">
-          {/* Back button */}
           <button
             className="flex items-center text-gray-600 mb-8 text-sm"
             onClick={() => router.back()}
@@ -211,7 +186,6 @@ export default function VerifyEmailPage() {
             ← Back
           </button>
 
-          {/* Header */}
           <div className="text-left mb-8">
             <h1 className="text-2xl font-semibold text-gray-900 mb-2">
               Please check your email!
@@ -222,7 +196,7 @@ export default function VerifyEmailPage() {
             </p>
           </div>
 
-          {/* Resend success message */}
+          {}
           {resendSuccess && (
             <div className="mb-4 p-3 bg-green-100 text-green-700 rounded text-sm">
               A new code has been sent to your email. Please check your inbox or
@@ -230,14 +204,14 @@ export default function VerifyEmailPage() {
             </div>
           )}
 
-          {/* Resend error message */}
+          {}
           {resendError && (
             <div className="mb-4 p-3 bg-red-100 text-red-700 rounded text-sm">
               {resendError}
             </div>
           )}
 
-          {/* Verification Code Input */}
+          {}
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex justify-center space-x-3 mb-6">
               {otpValues.map((value, index) => (

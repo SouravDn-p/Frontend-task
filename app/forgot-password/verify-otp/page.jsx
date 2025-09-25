@@ -25,48 +25,39 @@ export default function ForgotPasswordVerifyOtpPage() {
   const inputRefs = useRef([]);
 
   useEffect(() => {
-    // Get email from localStorage
     const forgotPasswordEmail = localStorage.getItem("forgotPasswordEmail");
     if (forgotPasswordEmail) {
       setEmail(forgotPasswordEmail);
     } else {
-      // Redirect to forgot password page if no email found
       router.push("/forgot-password");
     }
 
-    // Focus on first input when page loads
     if (inputRefs.current[0]) {
       inputRefs.current[0].focus();
     }
   }, [router]);
 
-  // Handle OTP input changes
   const handleOtpChange = (index, value) => {
-    // Clear verification error when user starts typing
     if (verificationError) {
       setVerificationError("");
     }
 
-    if (value.length > 1) return; // Only allow single digit
+    if (value.length > 1) return;
 
     const newOtpValues = [...otpValues];
     newOtpValues[index] = value;
     setOtpValues(newOtpValues);
 
-    // Move to next input if value is entered
     if (value && index < 5 && inputRefs.current[index + 1]) {
       inputRefs.current[index + 1].focus();
     }
 
-    // Move to previous input if value is deleted
     if (!value && index > 0 && inputRefs.current[index - 1]) {
       inputRefs.current[index - 1].focus();
     }
   };
 
-  // Handle paste event
   const handlePaste = (e) => {
-    // Clear verification error when user pastes
     if (verificationError) {
       setVerificationError("");
     }
@@ -81,31 +72,26 @@ export default function ForgotPasswordVerifyOtpPage() {
       const newOtpValues = pasteData.split("");
       setOtpValues(newOtpValues);
 
-      // Focus on last input
       if (inputRefs.current[5]) {
         inputRefs.current[5].focus();
       }
     }
   };
 
-  // Handle keydown for backspace
   const handleKeyDown = (index, e) => {
     if (e.key === "Backspace" && !otpValues[index] && index > 0) {
       inputRefs.current[index - 1].focus();
     }
   };
 
-  // Resend OTP function
   const handleResendOtp = async () => {
     setResending(true);
     setResendSuccess(false);
     setResendError("");
     try {
-      // Prepare form data for API submission
       const formData = new FormData();
       formData.append("email", email);
 
-      // Make API request to resend OTP
       const response = await fetch(
         "https://apitest.softvencefsd.xyz/api/forgot-password",
         {
@@ -116,9 +102,7 @@ export default function ForgotPasswordVerifyOtpPage() {
 
       if (response.ok) {
         setResendSuccess(true);
-        // Clear any previous OTP values
         setOtpValues(Array(6).fill(""));
-        // Focus on first input
         if (inputRefs.current[0]) {
           inputRefs.current[0].focus();
         }
@@ -149,10 +133,8 @@ export default function ForgotPasswordVerifyOtpPage() {
   const onSubmit = async (data) => {
     setVerificationError("");
     try {
-      // Combine OTP values into a single string
       const otpCode = otpValues.join("");
 
-      // Validate OTP is complete
       if (otpCode.length !== 6) {
         setError("otp", {
           type: "manual",
@@ -161,10 +143,8 @@ export default function ForgotPasswordVerifyOtpPage() {
         return;
       }
 
-      // Get email from localStorage
       const email = localStorage.getItem("forgotPasswordEmail");
 
-      // Validate email exists
       if (!email) {
         setError("otp", {
           type: "manual",
@@ -173,12 +153,10 @@ export default function ForgotPasswordVerifyOtpPage() {
         return;
       }
 
-      // Prepare form data for API submission
       const formData = new FormData();
       formData.append("email", email);
       formData.append("otp", otpCode);
 
-      // Make API request
       const response = await fetch(
         "https://apitest.softvencefsd.xyz/api/forgot-verify-otp",
         {
@@ -189,12 +167,10 @@ export default function ForgotPasswordVerifyOtpPage() {
 
       if (response.ok) {
         const responseData = await response.json();
-        // Extract token from the data object
         const token = responseData.data?.token;
         if (token) {
           localStorage.setItem("resetPasswordToken", token);
         } else {
-          // If no token in response, this is unexpected
           setError("otp", {
             type: "manual",
             message:
@@ -202,12 +178,9 @@ export default function ForgotPasswordVerifyOtpPage() {
           });
           return;
         }
-        // Store a flag to indicate that OTP verification was successful
         localStorage.setItem("otpVerified", "true");
-        // Redirect to reset password page after successful verification
         router.push("/forgot-password/reset");
       } else {
-        // Handle error response
         const errorData = await response.json().catch(() => ({}));
         console.error("OTP verification failed:", errorData);
         const errorMessage =
@@ -232,7 +205,7 @@ export default function ForgotPasswordVerifyOtpPage() {
 
   return (
     <section className="min-h-screen bg-white">
-      {/* Logo */}
+      {}
       <div className="flex items-center mb-8 px-12 pt-4">
         <Image src={Logo} alt="ScapeSync Logo" />
       </div>
@@ -246,7 +219,7 @@ export default function ForgotPasswordVerifyOtpPage() {
             ← Back
           </button>
 
-          {/* Header */}
+          {}
           <div className="text-left mb-8">
             <h1 className="text-2xl font-semibold text-gray-900 mb-2">
               Please check your email!
@@ -257,7 +230,7 @@ export default function ForgotPasswordVerifyOtpPage() {
             </p>
           </div>
 
-          {/* Resend success message */}
+          {}
           {resendSuccess && (
             <div className="mb-4 p-3 bg-green-100 text-green-700 rounded text-sm">
               A new code has been sent to your email. Please check your inbox or
@@ -265,21 +238,21 @@ export default function ForgotPasswordVerifyOtpPage() {
             </div>
           )}
 
-          {/* Resend error message */}
+          {}
           {resendError && (
             <div className="mb-4 p-3 bg-red-100 text-red-700 rounded text-sm">
               {resendError}
             </div>
           )}
 
-          {/* Verification error message */}
+          {}
           {verificationError && (
             <div className="mb-4 p-3 bg-red-100 text-red-700 rounded text-sm">
               {verificationError}
             </div>
           )}
 
-          {/* Verification Code Input */}
+          {}
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex justify-center space-x-3 mb-6">
               {otpValues.map((value, index) => (
