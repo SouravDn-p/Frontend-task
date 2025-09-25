@@ -4,7 +4,7 @@ import Blend from "@/public/assets/blend.png";
 
 const TaskSection = () => {
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+    <section className="py-8 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-7xl mx-auto">
         <div className="container mx-auto flex flex-col md:flex-row items-center justify-between px-4">
           {/* Left Content */}
@@ -15,12 +15,12 @@ const TaskSection = () => {
             </div>
 
             {/* Heading */}
-            <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
+            <h2 className="text-md md:text-3xl font-bold text-gray-900 sm:text-4xl">
               See tasks, track time, and navigate routes with ease.
             </h2>
 
             {/* Description */}
-            <p className="text-lg text-gray-600 leading-relaxed">
+            <p className="text-sm md:text-lg text-gray-600 leading-relaxed">
               Everything you need to manage your workday from job assignments to
               optimized routes and time logging.
             </p>
@@ -28,58 +28,22 @@ const TaskSection = () => {
             {/* Feature List */}
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
-                <div className="flex-shrink-0 w-5 h-5 bg-green-100 rounded flex items-center justify-center mt-0.5">
-                  <svg
-                    className="w-3 h-3 text-green-600"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-                <p className="text-gray-700 font-medium">
+                <div className="flex-shrink-0 w-1 h-5 bg-green-500 rounded flex items-center justify-center mt-0.5"></div>
+                <p className="text-gray-700 text-sm md:text-lg">
                   Assign jobs to the right team member
                 </p>
               </div>
 
               <div className="flex items-start space-x-3">
-                <div className="flex-shrink-0 w-5 h-5 bg-green-100 rounded flex items-center justify-center mt-0.5">
-                  <svg
-                    className="w-3 h-3 text-green-600"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-                <p className="text-gray-700 font-medium">
+                <div className="flex-shrink-0 w-1 h-5 bg-green-500 rounded flex items-center justify-center mt-0.5"></div>
+                <p className="text-gray-700 text-sm md:text-lg">
                   Monitor performance in real time
                 </p>
               </div>
 
               <div className="flex items-start space-x-3">
-                <div className="flex-shrink-0 w-5 h-5 bg-green-100 rounded flex items-center justify-center mt-0.5">
-                  <svg
-                    className="w-3 h-3 text-green-600"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-                <p className="text-gray-700 font-medium">
+                <div className="flex-shrink-0 w-1 h-5 bg-green-500 rounded flex items-center justify-center mt-0.5"></div>
+                <p className="text-gray-700 text-sm md:text-lg">
                   Manage clients and services seamlessly
                 </p>
               </div>

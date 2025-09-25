@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AuthProvider>
-          <div className="min-h-screen w-full overflow-x-hidden bg-white">
+          <div className="min-h-screen w-screen overflow-x-hidden bg-white">
             <AuthWrapper>{children}</AuthWrapper>
           </div>
         </AuthProvider>
